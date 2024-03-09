@@ -4,25 +4,28 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 const getData = async(id) =>{
-  const res = await fetch(`http://localhost:3000/api/posts${id}`)
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+    cache:"no-store",
+  })
 
   if(!res.ok) return notFound();
   return res.json()
 }
 
-// export const generateMetaData = async({params})=>{
-//   const post = await getData(params.id)
-//   return{
-//     title: post.title,
-//     description: post.desc
-//   }
+export const generateMetaData = async({params})=>{
+  const post = await getData(params.id)
+  console.log(post)
+  return{
+    title: "hey",
+    description: post.desc
+  };
 
-// }
+}
+
 
 
 const BlogPost = async ({ params }) => {
   const data = await getData(params.id);
-  console.log(data)
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -33,7 +36,7 @@ const BlogPost = async ({ params }) => {
           </p>
           <div className={styles.author}>
             <Image
-              src={data.img}
+              // src={data?.img}
               alt=""
               width={40}
               height={40}
@@ -44,7 +47,7 @@ const BlogPost = async ({ params }) => {
         </div>
         <div className={styles.imageContainer}>
           <Image
-            src={data.img}
+            // src={data.img}
             alt=""
             fill={true}
             className={styles.image}

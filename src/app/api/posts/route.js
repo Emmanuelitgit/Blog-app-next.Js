@@ -3,12 +3,35 @@ import connect from "@/utils/db";
 import Post from "@/models/Post";
 
 export const GET = async (request) => {
-    try {
-        await connect();
-        const posts = await Post.find();
-        return new NextResponse(JSON.stringify(posts), { status: 200 });
-    } catch (err) {
-        console.error("Database error:", err);
-        return new NextResponse("Database failed", { status: 500 });
-    }
+try {
+  const url = new URL(request.url);
+  console.log(url)
+
+  const username = url.searchParams.get("username");
+
+    await connect();
+
+    const posts = await Post.find(username && { username });
+
+    return new NextResponse(JSON.stringify(posts), { status: 200 });
+  } catch (err) {
+    return new NextResponse("Database Error", { status: 500 });
+  }
+};
+
+export const POST = async (request) => {
+    
+ try {
+  const body = await request.json();
+
+  const newPost = new Post(body);
+
+    await connect();
+
+    await newPost.save();
+
+    return new NextResponse("Post has been created", { status: 201 });
+  } catch (err) {
+    return new NextResponse("Database Error", { status: 500 });
+  }
 };

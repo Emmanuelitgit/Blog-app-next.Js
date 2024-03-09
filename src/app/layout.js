@@ -3,6 +3,7 @@ import './globals.css'
 import Navbar from '@/componets/navbar/Navbar'
 import Footer from '@/componets/footer/Footer'
 import { ThemeContextProvider } from '../context/ThemeContext'
+import AuthProvider from '@/componets/AuthProvider/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,11 +17,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ThemeContextProvider>
+          <AuthProvider>
           <div className='container'>
              <Navbar/>
              {children}
              <Footer/>
            </div>
+           </AuthProvider>
         </ThemeContextProvider>
         </body>
     </html>
