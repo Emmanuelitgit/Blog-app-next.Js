@@ -62,7 +62,7 @@ const Login = ({ url }) => {
         </button>
         {error && error}
       </form>
-      <button
+      <button 
         onClick={() => {
           signIn("google");
         }}

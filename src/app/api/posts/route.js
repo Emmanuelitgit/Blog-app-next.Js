@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import connect from "@/utils/db";
 import Post from "@/models/Post";
 
+
 export const GET = async (request) => {
 try {
+
   const url = new URL(request.url);
-  console.log(url)
 
   const username = url.searchParams.get("username");
 
@@ -18,6 +19,7 @@ try {
     return new NextResponse("Database Error", { status: 500 });
   }
 };
+
 
 export const POST = async (request) => {
     
